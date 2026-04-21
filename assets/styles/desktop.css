@@ -1,0 +1,73 @@
+/* Responsive (Mobile First is standard, but these are top-down tweaks) */
+@media (max-width: 991px) {
+    .hero h1 {
+        font-size: 3.5rem;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .about-image .image-placeholder {
+        height: 300px;
+        box-shadow: 10px 10px 0 var(--primary-color);
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--darker-bg);
+        flex-direction: column;
+        padding: 20px 0;
+        gap: 20px;
+        border-bottom: 1px solid var(--border-color);
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: clip-path 0.4s ease-in-out;
+    }
+
+    .nav-links.active {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .nav-links a.btn {
+        margin-top: 10px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    .schedule-header {
+        padding: 30px 20px;
+    }
+
+    .schedule-form {
+        padding: 30px 20px;
+    }
+  
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .section-title h2 {
+        font-size: 2rem;
+    }
+
+}

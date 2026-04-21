@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marins Barber | Barbearia</title>
+    <!-- Fonts: Oswald (Headings) and Inter (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                <img class="logo" src="assets/images/logo-escrito.png" alt="">
+            </a>
+            
+            <nav class="nav-links" id="nav-links">
+                <a href="#home">Início</a>
+                <a href="#services">Serviços</a>
+                <a href="#about">Sobre</a>
+                <button class="btn btn-primary nav-btn" onclick="openServiceSelect()">Agendar</button>
+            </nav>
+            
+            <button class="menu-toggle" id="hamburger-btn" aria-label="Abrir menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <video
+            class="bg-video"
+            autoplay
+            muted
+            loop
+            playsinline
+        >
+            <source src="assets/images/video01.mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="fade-in">Onde o <span class="text-gold">Estilo</span> Encontra a Tradição.</h1>
+            <p class="fade-in delay-1">Cortes modernos, barbas alinhadas e uma experiência que você nunca esquece.</p>
+            <div class="hero-actions fade-in delay-2">
+                <button class="btn btn-primary btn-large" onclick="openServiceSelect()">Agende seu Horário</button>
+                <a href="#services" class="btn btn-secondary btn-large">Ver Serviços</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossos Serviços</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="services-grid" id="svc-grid-main" role="list">
+                <!-- Servico 1 -->
+                <article class="service-card" role="listitem">
+                    <div class="service-card-img">
+                        <div class="service-card-img-placeholder" style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="service-card-img-overlay" aria-hidden="true"></div>
+                        <span class="service-icon-badge"><i data-lucide="scissors"></i></span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">Corte Clássico</h3>
+                        <p class="service-price">R$ 30,00</p>
+                    </div>
+                    <button class="service-btn" onclick="selectService('Corte Clássico', 30)">
+                        Agendar <i data-lucide="arrow-right" aria-hidden="true"></i>
+                    </button>
+                </article>
+
+                <!-- Servico 2 -->
+                <article class="service-card" role="listitem">
+                    <div class="service-card-img">
+                        <div class="service-card-img-placeholder" style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="service-card-img-overlay" aria-hidden="true"></div>
+                        <span class="service-icon-badge"><i data-lucide="user"></i></span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">Barba Terapia</h3>
+                        <p class="service-price">R$ 35,00</p>
+                    </div>
+                    <button class="service-btn" onclick="selectService('Barba Terapia', 35)">
+                        Agendar <i data-lucide="arrow-right" aria-hidden="true"></i>
+                    </button>
+                </article>
+
+                <!-- Servico 3 -->
+                <article class="service-card service-card--highlight" role="listitem">
+                    <div class="service-badge">Mais Pedido</div>
+                    <div class="service-card-img">
+                        <div class="service-card-img-placeholder" style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="service-card-img-overlay" aria-hidden="true"></div>
+                        <span class="service-icon-badge"><i data-lucide="star"></i></span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">Combo Vip (Corte + Barba)</h3>
+                        <p class="service-price">R$ 60,00</p>
+                    </div>
+                    <button class="service-btn" onclick="selectService('Combo Vip (Corte + Barba)', 60)">
+                        Agendar <i data-lucide="arrow-right" aria-hidden="true"></i>
+                    </button>
+                </article>
+
+                <!-- Servico 4 -->
+                <article class="service-card" role="listitem">
+                    <div class="service-card-img">
+                        <div class="service-card-img-placeholder" style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="service-card-img-overlay" aria-hidden="true"></div>
+                        <span class="service-icon-badge"><i data-lucide="droplet"></i></span>
+                    </div>
+                    <div class="service-body">
+                        <h3 class="service-title">Pigmentação</h3>
+                        <p class="service-price">R$ 30,00</p>
+                    </div>
+                    <button class="service-btn" onclick="selectService('Pigmentação', 30)">
+                        Agendar <i data-lucide="arrow-right" aria-hidden="true"></i>
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+        <div class="container about-content">
+            <div class="about-text">
+                <h2>Sobre a Marins Barber</h2>
+                <div class="divider left"></div>
+                <p>Nascida da paixão pela barbearia clássica, a Marins Barber não é apenas um lugar para cortar o cabelo, é um ambiente onde a tradição masculina é reverenciada.</p>
+                <p>Nossos profissionais são altamente qualificados e estão sempre atualizados com as últimas tendências de cortes e cuidados masculinos.</p>
+                <div class="features">
+                </div>
+            </div>
+            <div class="about-image">
+                <div class="image-placeholder">
+                    <span>Espaço Premium</span>
+                    <img src="assets/images/image01.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ BOOKING MODAL ═══════════════════════ -->
+    <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+        aria-hidden="true">
+        <div class="modal" id="booking-modal">
+            <button class="modal-close" id="modal-close-btn" onclick="closeModal()" aria-label="Fechar modal">
+                <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+
+            <!-- Step indicators -->
+            <div class="modal-steps" aria-label="Passos do agendamento">
+                <div class="step-dot active" id="step-dot-1" aria-label="Passo 1: Serviço"></div>
+                <div class="step-line" id="step-line-1" aria-hidden="true"></div>
+                <div class="step-dot" id="step-dot-2" aria-label="Passo 2: Data e Hora"></div>
+                <div class="step-line" id="step-line-2" aria-hidden="true"></div>
+                <div class="step-dot" id="step-dot-3" aria-label="Passo 3: Confirmar"></div>
+            </div>
+
+            <!-- ── Step 1: Service Selection ── -->
+            <div class="modal-step" id="modal-step-1" role="region" aria-labelledby="step1-title">
+                <h2 class="modal-title" id="modal-title">Escolha o Serviço</h2>
+                <p class="modal-subtitle">Selecione o que você deseja agendar</p>
+
+                <div class="service-options" role="radiogroup" aria-label="Serviços disponíveis">
+                    <label class="service-option" id="opt-corte">
+                        <input type="radio" name="service" value="Corte Clássico" data-price="30" />
+                        <div class="service-option-inner">
+                            <i data-lucide="scissors" aria-hidden="true"></i>
+                            <span class="opt-name">Corte Clássico</span>
+                            <span class="opt-desc">Acabamento impecável</span>
+                        </div>
+                    </label>
+
+                    <label class="service-option" id="opt-barba">
+                        <input type="radio" name="service" value="Barba Terapia" data-price="35" />
+                        <div class="service-option-inner">
+                            <i data-lucide="user" aria-hidden="true"></i>
+                            <span class="opt-name">Barba Terapia</span>
+                            <span class="opt-desc">Toalha quente e massagem</span>
+                        </div>
+                    </label>
+
+                    <label class="service-option" id="opt-combo">
+                        <input type="radio" name="service" value="Combo Vip (Corte + Barba)" data-price="60" />
+                        <div class="service-option-inner">
+                            <i data-lucide="star" aria-hidden="true"></i>
+                            <span class="opt-name">Combo Vip</span>
+                            <span class="opt-desc">Corte + Barba</span>
+                        </div>
+                    </label>
+                    
+                    <label class="service-option" id="opt-pigmentacao">
+                        <input type="radio" name="service" value="Pigmentação" data-price="30" />
+                        <div class="service-option-inner">
+                            <i data-lucide="droplet" aria-hidden="true"></i>
+                            <span class="opt-name">Pigmentação</span>
+                            <span class="opt-desc">Realce e correção</span>
+                        </div>
+                    </label>
+                </div>
+
+                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="step1-next" onclick="goToStep(2)" disabled>
+                    Próximo <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- ── Step 2: Date & Time ── -->
+            <div class="modal-step hidden" id="modal-step-2" role="region" aria-labelledby="step2-title">
+                <button class="back-btn" id="step2-back-btn" onclick="goBackFromStep2()" aria-label="Voltar">
+                    <i data-lucide="arrow-left" aria-hidden="true"></i> Voltar
+                </button>
+                <h2 class="modal-title" id="step2-title">Data &amp; Horário</h2>
+                <p class="modal-subtitle">Selecione quando deseja ser atendido</p>
+
+                <!-- Calendar -->
+                <div class="calendar" id="calendar" role="application" aria-label="Calendário de agendamento">
+                    <div class="cal-nav">
+                        <button class="cal-nav-btn" id="cal-prev" onclick="changeMonth(-1)" aria-label="Mês anterior">
+                            <i data-lucide="chevron-left" aria-hidden="true"></i>
+                        </button>
+                        <span class="cal-month-label" id="cal-month-label" aria-live="polite"></span>
+                        <button class="cal-nav-btn" id="cal-next" onclick="changeMonth(1)" aria-label="Próximo mês">
+                            <i data-lucide="chevron-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="cal-weekdays" aria-hidden="true">
+                        <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span>
+                        <span>Qui</span><span>Sex</span><span>Sáb</span>
+                    </div>
+                    <div class="cal-days" id="cal-days" role="grid" aria-label="Dias do mês"></div>
+                </div>
+
+                <!-- Time slots -->
+                <div class="time-slots-section" id="time-slots-section" aria-label="Horários disponíveis" hidden>
+                    <h3 class="time-slots-title">Escolha o horário</h3>
+                    <div class="time-slots" id="time-slots" role="group" aria-label="Horários disponíveis"></div>
+                </div>
+
+                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="step2-next" onclick="goToStep(3)" disabled>
+                    Revisar Agendamento <i data-lucide="arrow-right" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- ── Step 3: Confirm ── -->
+            <div class="modal-step hidden" id="modal-step-3" role="region" aria-labelledby="step3-title">
+                <button class="back-btn" onclick="goToStep(2)" aria-label="Voltar ao passo 2">
+                    <i data-lucide="arrow-left" aria-hidden="true"></i> Voltar
+                </button>
+                <h2 class="modal-title" id="step3-title">Confirmar Agendamento</h2>
+                <p class="modal-subtitle">Revise os detalhes antes de finalizar</p>
+
+                <div class="booking-summary" id="booking-summary" role="region" aria-label="Resumo do agendamento">
+                    <div class="summary-item summary-item--services">
+                        <i data-lucide="scissors" aria-hidden="true"></i>
+                        <div class="summary-services-wrap">
+                            <span class="summary-label">Serviços</span>
+                            <div id="summary-services-list" class="summary-services-list">—</div>
+                            <div id="summary-total-line" class="summary-total-line" hidden>
+                                <span class="summary-total-label">Total estimado</span>
+                                <strong id="summary-total" class="summary-total-value">—</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i data-lucide="calendar" aria-hidden="true"></i>
+                        <div>
+                            <span class="summary-label">Data</span>
+                            <strong class="summary-value" id="summary-date">—</strong>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i data-lucide="clock" aria-hidden="true"></i>
+                        <div>
+                            <span class="summary-label">Horário</span>
+                            <strong class="summary-value" id="summary-time">—</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dados do cliente -->
+                <div class="client-fields">
+                    <div class="client-field">
+                        <label for="client-name">
+                            <i data-lucide="user" aria-hidden="true"></i> Seu nome
+                            <span class="client-required">*</span>
+                        </label>
+                        <input type="text" id="client-name" class="client-input" placeholder="Como você se chama?" maxlength="60" autocomplete="name" />
+                    </div>
+                    <div class="client-field">
+                        <label for="client-phone">
+                            <i data-lucide="phone" aria-hidden="true"></i> Seu WhatsApp
+                            <span class="client-required">*</span>
+                        </label>
+                        <input type="tel" id="client-phone" class="client-input" placeholder="(11) 99999-9999" maxlength="20" autocomplete="tel" />
+                    </div>
+                    <p class="client-error" id="client-error" hidden></p>
+                </div>
+
+                <div class="confirm-note">
+                    <i data-lucide="info" aria-hidden="true"></i>
+                    <p>Você será redirecionado ao WhatsApp para confirmar o agendamento.</p>
+                </div>
+
+                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="whatsapp-btn" onclick="finalizeOnWhatsApp()">
+                    Finalizar no WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════ DISCOUNT QUESTION MODAL ═══════════════════════ -->
+    <div class="modal-backdrop" id="discount-backdrop" role="dialog" aria-modal="true" aria-labelledby="discount-modal-title" aria-hidden="true">
+        <div class="modal modal--small" id="discount-modal">
+            <button class="modal-close" onclick="closeDiscountModal()" aria-label="Fechar modal">
+                <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+
+            <div class="discount-icon" aria-hidden="true">
+                <i data-lucide="tag"></i>
+            </div>
+
+            <h2 class="modal-title" id="discount-modal-title">Deseja mais algum serviço?</h2>
+            <p class="modal-subtitle">Selecionando mais de um serviço você sai completo!</p>
+
+            <div class="discount-service-preview" id="discount-service-preview"></div>
+
+            <div class="discount-actions">
+                <button class="btn btn-secondary btn-full" style="width:100%;margin-bottom:10px;" onclick="discountNo()">
+                    Não, quero apenas este serviço
+                </button>
+                <button class="btn btn-primary btn-full" style="width:100%" onclick="discountYes()">
+                    Sim, quero selecionar mais!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════ MULTI-SELECT MODAL ═══════════════════════ -->
+    <div class="modal-backdrop" id="multiselect-backdrop" role="dialog" aria-modal="true" aria-labelledby="multiselect-modal-title" aria-hidden="true">
+        <div class="modal" id="multiselect-modal">
+            <button class="modal-close" onclick="closeMultiSelectModal()" aria-label="Fechar modal">
+                <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+
+            <h2 class="modal-title" id="multiselect-modal-title">Selecione os Serviços</h2>
+            <p class="modal-subtitle">Marque todos os que deseja agendar</p>
+
+            <div class="multiselect-services" id="multiselect-services" role="group" aria-label="Serviços disponíveis">
+                <!-- preenchido via JS -->
+            </div>
+
+            <div class="multiselect-total-bar">
+                <span class="total-label">Total estimado:</span>
+                <span class="total-value" id="multiselect-total">R$ 0,00</span>
+            </div>
+
+            <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="multiselect-confirm-btn" onclick="finalizeMultiSelect()" disabled>
+                Continuar para agendamento <i data-lucide="arrow-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <!-- Firebase SDK (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="assets/js/firebase-config.js"></script>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
