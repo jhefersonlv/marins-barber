@@ -575,6 +575,8 @@ async function finalizeOnWhatsApp() {
     `*WhatsApp:* ${phone}\n\n` +
     `Aguardo a confirmação. Obrigado! 💈`;
 
+  const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
   try {
     const docRef = await db.collection('users').doc(TENANT_UID).collection('sched_bookings').add({
       clientName: name,
@@ -587,17 +589,36 @@ async function finalizeOnWhatsApp() {
       source:     'client',
       createdAt:  firebase.firestore.FieldValue.serverTimestamp()
     });
-    console.log('[KV] Agendamento salvo:', docRef.id);
+    console.log('[Marins Barber] Agendamento salvo:', docRef.id);
   } catch (e) {
-    console.error('[KV] ERRO ao salvar agendamento:', e.code, e.message);
+    console.error('[Marins Barber] ERRO ao salvar agendamento:', e.code, e.message);
   }
 
-  window.open(
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
-    '_blank', 'noopener,noreferrer'
-  );
+  /* Fecha o booking modal e abre o modal de sucesso */
   closeModal();
+  const waBtn = document.getElementById('success-whatsapp-btn');
+  if (waBtn) waBtn.href = waUrl;
+
+  const successBd = document.getElementById('success-backdrop');
+  successBd.classList.add('open');
+  successBd.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  /* Atualiza ícones do Lucide no modal recém aberto */
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
+
+/* ─── MODAL DE SUCESSO ───────────────────────────────────────── */
+function closeSuccessModal() {
+  const bd = document.getElementById('success-backdrop');
+  bd.classList.remove('open');
+  bd.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('success-backdrop').addEventListener('click', e => {
+  if (e.target === document.getElementById('success-backdrop')) closeSuccessModal();
+});
 
 /* ─── ABRIR SELEÇÃO DE SERVIÇOS (nav/hero/portfólio) ─────────── */
 function openServiceSelect() {
@@ -798,9 +819,9 @@ function finalizeMultiSelect() {
 }
 
 /* ─── NAV: SCROLL HEADER ─────────────────────────────────────── */
-const siteHeader = document.getElementById('site-header');
+const siteHeader = document.getElementById('site-header') || document.querySelector('.navbar');
 function handleScroll() {
-  siteHeader.classList.toggle('scrolled', window.scrollY > 50);
+  if (siteHeader) siteHeader.classList.toggle('scrolled', window.scrollY > 50);
 }
 window.addEventListener('scroll', handleScroll, { passive: true });
 handleScroll();

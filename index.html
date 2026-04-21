@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marins Barber | Barbearia</title>
     <!-- Fonts: Oswald (Headings) and Inter (Body) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <!-- Navbar -->
     <header class="navbar">
@@ -16,14 +20,14 @@
             <a href="index.html" class="logo">
                 <img class="logo" src="assets/images/logo-escrito.png" alt="">
             </a>
-            
+
             <nav class="nav-links" id="nav-links">
                 <a href="#home">Início</a>
                 <a href="#services">Serviços</a>
                 <a href="#about">Sobre</a>
                 <button class="btn btn-primary nav-btn" onclick="openServiceSelect()">Agendar</button>
             </nav>
-            
+
             <button class="menu-toggle" id="hamburger-btn" aria-label="Abrir menu">
                 <i data-lucide="menu"></i>
             </button>
@@ -32,13 +36,7 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <video
-            class="bg-video"
-            autoplay
-            muted
-            loop
-            playsinline
-        >
+        <video class="bg-video" autoplay muted loop playsinline>
             <source src="assets/images/video01.mp4">
         </video>
         <div class="hero-overlay"></div>
@@ -59,12 +57,14 @@
                 <h2>Nossos Serviços</h2>
                 <div class="divider"></div>
             </div>
-            
+
             <div class="services-grid" id="svc-grid-main" role="list">
                 <!-- Servico 1 -->
                 <article class="service-card" role="listitem">
                     <div class="service-card-img">
-                        <div class="service-card-img-placeholder" style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="service-card-img-placeholder"
+                            style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;">
+                        </div>
                         <div class="service-card-img-overlay" aria-hidden="true"></div>
                         <span class="service-icon-badge"><i data-lucide="scissors"></i></span>
                     </div>
@@ -80,7 +80,9 @@
                 <!-- Servico 2 -->
                 <article class="service-card" role="listitem">
                     <div class="service-card-img">
-                        <div class="service-card-img-placeholder" style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="service-card-img-placeholder"
+                            style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;">
+                        </div>
                         <div class="service-card-img-overlay" aria-hidden="true"></div>
                         <span class="service-icon-badge"><i data-lucide="user"></i></span>
                     </div>
@@ -97,7 +99,9 @@
                 <article class="service-card service-card--highlight" role="listitem">
                     <div class="service-badge">Mais Pedido</div>
                     <div class="service-card-img">
-                        <div class="service-card-img-placeholder" style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="service-card-img-placeholder"
+                            style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;">
+                        </div>
                         <div class="service-card-img-overlay" aria-hidden="true"></div>
                         <span class="service-icon-badge"><i data-lucide="star"></i></span>
                     </div>
@@ -113,7 +117,9 @@
                 <!-- Servico 4 -->
                 <article class="service-card" role="listitem">
                     <div class="service-card-img">
-                        <div class="service-card-img-placeholder" style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;"></div>
+                        <div class="service-card-img-placeholder"
+                            style="background-image: url('assets/images/image01.jpg'); background-size: cover; background-position: center;">
+                        </div>
                         <div class="service-card-img-overlay" aria-hidden="true"></div>
                         <span class="service-icon-badge"><i data-lucide="droplet"></i></span>
                     </div>
@@ -135,8 +141,10 @@
             <div class="about-text">
                 <h2>Sobre a Marins Barber</h2>
                 <div class="divider left"></div>
-                <p>Nascida da paixão pela barbearia clássica, a Marins Barber não é apenas um lugar para cortar o cabelo, é um ambiente onde a tradição masculina é reverenciada.</p>
-                <p>Nossos profissionais são altamente qualificados e estão sempre atualizados com as últimas tendências de cortes e cuidados masculinos.</p>
+                <p>Nascida da paixão pela barbearia clássica, a Marins Barber não é apenas um lugar para cortar o
+                    cabelo, é um ambiente onde a tradição masculina é reverenciada.</p>
+                <p>Nossos profissionais são altamente qualificados e estão sempre atualizados com as últimas tendências
+                    de cortes e cuidados masculinos.</p>
                 <div class="features">
                 </div>
             </div>
@@ -198,7 +206,7 @@
                             <span class="opt-desc">Corte + Barba</span>
                         </div>
                     </label>
-                    
+
                     <label class="service-option" id="opt-pigmentacao">
                         <input type="radio" name="service" value="Pigmentação" data-price="30" />
                         <div class="service-option-inner">
@@ -209,7 +217,8 @@
                     </label>
                 </div>
 
-                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="step1-next" onclick="goToStep(2)" disabled>
+                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="step1-next"
+                    onclick="goToStep(2)" disabled>
                     Próximo <i data-lucide="arrow-right" aria-hidden="true"></i>
                 </button>
             </div>
@@ -246,7 +255,8 @@
                     <div class="time-slots" id="time-slots" role="group" aria-label="Horários disponíveis"></div>
                 </div>
 
-                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="step2-next" onclick="goToStep(3)" disabled>
+                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="step2-next"
+                    onclick="goToStep(3)" disabled>
                     Revisar Agendamento <i data-lucide="arrow-right" aria-hidden="true"></i>
                 </button>
             </div>
@@ -294,32 +304,36 @@
                             <i data-lucide="user" aria-hidden="true"></i> Seu nome
                             <span class="client-required">*</span>
                         </label>
-                        <input type="text" id="client-name" class="client-input" placeholder="Como você se chama?" maxlength="60" autocomplete="name" />
+                        <input type="text" id="client-name" class="client-input" placeholder="Como você se chama?"
+                            maxlength="60" autocomplete="name" />
                     </div>
                     <div class="client-field">
                         <label for="client-phone">
                             <i data-lucide="phone" aria-hidden="true"></i> Seu WhatsApp
                             <span class="client-required">*</span>
                         </label>
-                        <input type="tel" id="client-phone" class="client-input" placeholder="(11) 99999-9999" maxlength="20" autocomplete="tel" />
+                        <input type="tel" id="client-phone" class="client-input" placeholder="(11) 99999-9999"
+                            maxlength="20" autocomplete="tel" />
                     </div>
                     <p class="client-error" id="client-error" hidden></p>
                 </div>
 
                 <div class="confirm-note">
                     <i data-lucide="info" aria-hidden="true"></i>
-                    <p>Você será redirecionado ao WhatsApp para confirmar o agendamento.</p>
+                    <p>Confirme seus dados e clique no botão abaixo para registrar o agendamento.</p>
                 </div>
 
-                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="whatsapp-btn" onclick="finalizeOnWhatsApp()">
-                    Finalizar no WhatsApp
+                <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="whatsapp-btn"
+                    onclick="finalizeOnWhatsApp()">
+                    <i data-lucide="check" aria-hidden="true"></i> Confirmar Agendamento
                 </button>
             </div>
         </div>
     </div>
 
     <!-- ═══════════════════════ DISCOUNT QUESTION MODAL ═══════════════════════ -->
-    <div class="modal-backdrop" id="discount-backdrop" role="dialog" aria-modal="true" aria-labelledby="discount-modal-title" aria-hidden="true">
+    <div class="modal-backdrop" id="discount-backdrop" role="dialog" aria-modal="true"
+        aria-labelledby="discount-modal-title" aria-hidden="true">
         <div class="modal modal--small" id="discount-modal">
             <button class="modal-close" onclick="closeDiscountModal()" aria-label="Fechar modal">
                 <i data-lucide="x" aria-hidden="true"></i>
@@ -335,7 +349,8 @@
             <div class="discount-service-preview" id="discount-service-preview"></div>
 
             <div class="discount-actions">
-                <button class="btn btn-secondary btn-full" style="width:100%;margin-bottom:10px;" onclick="discountNo()">
+                <button class="btn btn-secondary btn-full" style="width:100%;margin-bottom:10px;"
+                    onclick="discountNo()">
                     Não, quero apenas este serviço
                 </button>
                 <button class="btn btn-primary btn-full" style="width:100%" onclick="discountYes()">
@@ -346,7 +361,8 @@
     </div>
 
     <!-- ═══════════════════════ MULTI-SELECT MODAL ═══════════════════════ -->
-    <div class="modal-backdrop" id="multiselect-backdrop" role="dialog" aria-modal="true" aria-labelledby="multiselect-modal-title" aria-hidden="true">
+    <div class="modal-backdrop" id="multiselect-backdrop" role="dialog" aria-modal="true"
+        aria-labelledby="multiselect-modal-title" aria-hidden="true">
         <div class="modal" id="multiselect-modal">
             <button class="modal-close" onclick="closeMultiSelectModal()" aria-label="Fechar modal">
                 <i data-lucide="x" aria-hidden="true"></i>
@@ -364,9 +380,34 @@
                 <span class="total-value" id="multiselect-total">R$ 0,00</span>
             </div>
 
-            <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="multiselect-confirm-btn" onclick="finalizeMultiSelect()" disabled>
+            <button class="btn btn-primary btn-full" style="margin-top:20px;width:100%" id="multiselect-confirm-btn"
+                onclick="finalizeMultiSelect()" disabled>
                 Continuar para agendamento <i data-lucide="arrow-right" aria-hidden="true"></i>
             </button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════ SUCCESS MODAL ═══════════════════════ -->
+    <div class="modal-backdrop" id="success-backdrop" role="dialog" aria-modal="true"
+        aria-labelledby="success-modal-title" aria-hidden="true">
+        <div class="modal modal--small" id="success-modal">
+            <div class="success-icon" aria-hidden="true">
+                <i data-lucide="check-circle"></i>
+            </div>
+            <h2 class="modal-title" id="success-modal-title">Agendamento Confirmado!</h2>
+            <p class="modal-subtitle">Seu horário foi registrado com sucesso. Clique no botão abaixo para enviar uma
+                mensagem de confirmação pelo WhatsApp.</p>
+
+            <div class="discount-actions" style="margin-top:24px;">
+                <a id="success-whatsapp-btn" href="#" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary btn-full"
+                    style="width:100%;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;">
+                    <i data-lucide="message-circle" aria-hidden="true"></i> Abrir WhatsApp
+                </a>
+                <button class="btn btn-secondary btn-full" style="width:100%" onclick="closeSuccessModal()">
+                    Fechar
+                </button>
+            </div>
         </div>
     </div>
 
@@ -383,4 +424,5 @@
         lucide.createIcons();
     </script>
 </body>
+
 </html>
