@@ -4,7 +4,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 /* UID do Tenant no Orbit Tools (Usando o da referência temporariamente) */
-const TENANT_UID = 'pjk70Jv4anW2ve4aWFdb8dqCpSv2';
+const TENANT_UID = 'WgTfBZFS88UWfZn7rjJXpJM1ztq2';
 
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyCMl29LbQqrqqPQR8EKa1g8Cm4rHUwLWJA',
