@@ -1,0 +1,431 @@
+/* ══════════════════════════════════════════════════════════════
+   Área do Cliente — Marins Barber
+   Portal de acesso para clientes com plano ativo.
+   WordVirtua · 2026
+══════════════════════════════════════════════════════════════ */
+
+/* ── Telas ─────────────────────────────────────────────────── */
+.ca-screen.hidden { display: none !important; }
+
+/* ── Login Screen ──────────────────────────────────────────── */
+.ca-login-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  background: var(--darker-bg);
+}
+
+.ca-logo-wrap {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.ca-logo-wrap img { height: 60px; }
+
+.ca-login-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.ca-login-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin-bottom: 6px;
+}
+
+.ca-login-subtitle {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* ── Campo de formulário ───────────────────────────────────── */
+.ca-field { margin-bottom: 20px; }
+
+.ca-field label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 7px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.ca-field label i { font-size: 0.95rem; }
+
+.ca-field input {
+  width: 100%;
+  background: #1a1a1a;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  padding: 13px 14px;
+  color: var(--text-color);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  transition: border-color 0.2s;
+  outline: none;
+  letter-spacing: 1px;
+}
+
+.ca-field input:focus { border-color: var(--primary-color); }
+.ca-field input.input-error { border-color: #e53e3e; }
+
+/* ── Botões ────────────────────────────────────────────────── */
+.ca-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.ca-btn--primary {
+  background: var(--primary-color);
+  color: #111;
+  font-weight: 600;
+}
+.ca-btn--primary:hover:not(:disabled) { background: var(--primary-hover); }
+.ca-btn--primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.ca-btn--secondary {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border-color);
+}
+.ca-btn--secondary:hover { border-color: var(--primary-color); color: var(--primary-color); }
+
+.ca-btn--wa {
+  background: #25D366;
+  color: #fff;
+  font-weight: 600;
+}
+.ca-btn--wa:hover:not(:disabled) { background: #1da350; }
+
+/* ── Erro / Alerta ─────────────────────────────────────────── */
+.ca-error {
+  margin-top: 14px;
+  padding: 11px 14px;
+  background: rgba(229, 62, 62, 0.1);
+  border: 1px solid rgba(229, 62, 62, 0.25);
+  border-radius: 8px;
+  color: #fc8181;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+.ca-error.hidden { display: none; }
+
+.ca-login-note {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ── Dashboard Screen ─────────────────────────────────────── */
+.ca-dashboard-screen {
+  min-height: 100vh;
+  background: var(--darker-bg);
+}
+
+.ca-topbar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ca-topbar-logo img { height: 34px; }
+
+.ca-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ca-user-tag {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ca-user-tag strong { color: var(--text-color); }
+
+.ca-logout-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-family: var(--font-body);
+  transition: color 0.2s;
+}
+.ca-logout-btn:hover { color: #fc8181; }
+
+/* ── Conteúdo principal ────────────────────────────────────── */
+.ca-content {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+.ca-welcome { margin-bottom: 24px; }
+
+.ca-welcome h1 {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.ca-welcome p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+/* ── Plano Card ─────────────────────────────────────────────── */
+.ca-plan-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 18px;
+  transition: border-color 0.2s;
+}
+
+.ca-plan-card--expired { border-color: rgba(229, 62, 62, 0.3); }
+.ca-plan-card--expiring { border-color: rgba(255, 192, 0, 0.3); }
+
+.ca-plan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ca-plan-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ca-plan-name i { color: var(--primary-color); }
+
+.ca-plan-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ca-plan-badge--active  { background: rgba(46,125,50,.18); color: #6ef077; border: 1px solid rgba(46,125,50,.35); }
+.ca-plan-badge--expired { background: rgba(229,62,62,.15); color: #fc8181; border: 1px solid rgba(229,62,62,.3); }
+.ca-plan-badge--overdue { background: rgba(255,160,0,.15);  color: #ffc947; border: 1px solid rgba(255,160,0,.3); }
+
+/* ── Créditos ───────────────────────────────────────────────── */
+.ca-credits-section { margin-bottom: 16px; }
+
+.ca-credits-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.ca-credits-text { font-size: 0.83rem; color: var(--text-muted); }
+
+.ca-credits-value {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--primary-color);
+}
+
+.ca-credits-bar {
+  height: 7px;
+  background: #222;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.ca-credits-fill {
+  height: 100%;
+  background: var(--primary-color);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  min-width: 2px;
+}
+
+.ca-credits-fill--full    { background: #e53e3e; }
+.ca-credits-fill--expired { background: #444; }
+
+.ca-credits-sub {
+  font-size: 0.77rem;
+  color: var(--text-muted);
+}
+
+/* ── Vencimento ─────────────────────────────────────────────── */
+.ca-plan-expiry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.ca-plan-expiry i { font-size: 1rem; flex-shrink: 0; }
+.ca-plan-expiry--soon    { color: #ffc947; }
+.ca-plan-expiry--expired { color: #fc8181; }
+
+/* ── Sem plano ──────────────────────────────────────────────── */
+.ca-no-plan-card {
+  background: var(--card-bg);
+  border: 1px dashed var(--border-color);
+  border-radius: 16px;
+  padding: 36px 24px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.ca-no-plan-card .ca-np-icon {
+  font-size: 2.8rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.ca-no-plan-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* ── Ações ──────────────────────────────────────────────────── */
+.ca-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* ── Badge de crédito de plano (step 3 do booking) ─────────── */
+.ca-plan-credit-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  font-size: 0.84rem;
+  color: var(--primary-color);
+  line-height: 1.5;
+}
+
+.ca-plan-credit-note i {
+  font-size: 1.1rem;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* ── Info do cliente (read-only) no step 3 ──────────────────── */
+.ca-client-info-row {
+  background: #1a1a1a;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ca-client-info-row i { color: var(--primary-color); font-size: 1.05rem; flex-shrink: 0; }
+
+.ca-client-info-text strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-color);
+}
+
+.ca-client-info-text span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ── Loading Spinner ───────────────────────────────────────── */
+.ca-spin { animation: ca-rotate 0.75s linear infinite; display: inline-block; }
+
+@keyframes ca-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Modal pequeno (sucesso) ─────────────────────────────────── */
+.modal--small {
+  max-width: 380px;
+  text-align: center;
+  padding: 40px 32px;
+}
+
+/* ── Checkbox nos serviços (reutiliza .service-option) ──────── */
+.service-option input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.service-option input[type="checkbox"]:checked + .service-option-inner {
+  border-color: var(--primary-color);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+/* ── Responsivo ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .ca-login-card  { padding: 28px 20px; }
+  .ca-welcome h1  { font-size: 1.45rem; }
+  .ca-plan-card   { padding: 20px 18px; }
+}

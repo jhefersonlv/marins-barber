@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Área do Cliente | Marins Barber</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Estilos base do site + portal -->
+  <link rel="stylesheet" href="assets/styles/global.css" />
+  <link rel="stylesheet" href="assets/styles/utillity.css" />
+  <link rel="stylesheet" href="assets/styles/pages/modal.css" />
+  <link rel="stylesheet" href="assets/styles/area-cliente.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════ TELA DE LOGIN ═══════════════════════ -->
+  <section id="ca-login" class="ca-screen ca-login-screen">
+    <div class="ca-logo-wrap">
+      <img src="assets/images/logo-escrito.png" alt="Marins Barber" />
+    </div>
+
+    <div class="ca-login-card">
+      <h1 class="ca-login-title">Área do Cliente</h1>
+      <p class="ca-login-subtitle">
+        Acesse seu plano, veja seus créditos e agende pelo seu número de WhatsApp.
+      </p>
+
+      <div class="ca-field">
+        <label for="ca-phone-input">
+          <i data-lucide="smartphone"></i> Seu número de WhatsApp
+        </label>
+        <input
+          type="tel"
+          id="ca-phone-input"
+          placeholder="(11) 99999-9999"
+          maxlength="16"
+          autocomplete="tel"
+          inputmode="numeric"
+        />
+      </div>
+
+      <button id="ca-login-btn" class="ca-btn ca-btn--primary" onclick="caLogin()">
+        <i data-lucide="arrow-right"></i> Acessar Minha Área
+      </button>
+
+      <div id="ca-login-error" class="ca-error hidden"></div>
+
+      <p class="ca-login-note">
+        Nenhuma senha necessária. Basta seu número de WhatsApp cadastrado.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════ TELA DO DASHBOARD ══════════════════════ -->
+  <section id="ca-dashboard" class="ca-screen ca-dashboard-screen hidden">
+
+    <!-- Topbar -->
+    <header class="ca-topbar">
+      <div class="ca-topbar-logo">
+        <img src="assets/images/logo-escrito.png" alt="Marins Barber" />
+      </div>
+      <div class="ca-topbar-right">
+        <span class="ca-user-tag">Olá, <strong id="ca-topbar-name">—</strong></span>
+        <button class="ca-logout-btn" onclick="caLogout()" title="Sair">
+          <i data-lucide="log-out"></i> Sair
+        </button>
+      </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <div class="ca-content">
+
+      <!-- Boas-vindas -->
+      <div class="ca-welcome">
+        <h1 id="ca-welcome-name">Olá! ✂️</h1>
+        <p>Gerencie seu plano e agende quando quiser.</p>
+      </div>
+
+      <!-- Card do Plano (renderizado via JS) -->
+      <div id="ca-plan-wrap"></div>
+
+      <!-- Ações -->
+      <div class="ca-actions">
+        <button id="ca-book-btn" class="ca-btn ca-btn--primary" onclick="caOpenBooking()">
+          <i data-lucide="calendar-plus"></i> Agendar Horário
+        </button>
+        <a href="index.html" class="ca-btn ca-btn--secondary" style="text-decoration:none;">
+          <i data-lucide="arrow-left"></i> Voltar ao Site
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════ MODAL DE AGENDAMENTO ══════════════════ -->
+  <div
+    id="ca-bk-backdrop"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ca-bk-modal-title"
+    aria-hidden="true"
+  >
+    <div class="modal" id="ca-bk-modal">
+
+      <button class="modal-close" onclick="caCloseBookingModal()" aria-label="Fechar modal">
+        <i data-lucide="x"></i>
+      </button>
+
+      <!-- Step dots -->
+      <div class="modal-steps" aria-label="Passos do agendamento">
+        <div class="step-dot active" id="ca-step-dot-1"></div>
+        <div class="step-line"      id="ca-step-line-1"></div>
+        <div class="step-dot"       id="ca-step-dot-2"></div>
+        <div class="step-line"      id="ca-step-line-2"></div>
+        <div class="step-dot"       id="ca-step-dot-3"></div>
+      </div>
+
+      <!-- ── STEP 1: Serviços ── -->
+      <div class="modal-step" id="ca-bk-step-1">
+        <h2 class="modal-title" id="ca-bk-modal-title">Escolha o Serviço</h2>
+        <p class="modal-subtitle">Selecione um ou mais serviços que deseja agendar</p>
+
+        <div class="service-options" id="ca-svc-options" role="group" aria-label="Serviços disponíveis">
+          <!-- Preenchido via JS -->
+        </div>
+
+        <button
+          class="btn btn-primary btn-full"
+          style="margin-top:20px;width:100%"
+          id="ca-step1-next"
+          onclick="caGoToStep2()"
+          disabled
+        >
+          Próximo <i data-lucide="arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- ── STEP 2: Data & Horário ── -->
+      <div class="modal-step hidden" id="ca-bk-step-2">
+        <button class="back-btn" onclick="caShowBookingStep(1)" aria-label="Voltar">
+          <i data-lucide="arrow-left"></i> Voltar
+        </button>
+        <h2 class="modal-title">Data &amp; Horário</h2>
+        <p class="modal-subtitle">Selecione quando deseja ser atendido</p>
+
+        <!-- Calendário -->
+        <div class="calendar" role="application" aria-label="Calendário de agendamento">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="caChangeMonth(-1)" aria-label="Mês anterior">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <span class="cal-month-label" id="ca-cal-label" aria-live="polite"></span>
+            <button class="cal-nav-btn" onclick="caChangeMonth(1)" aria-label="Próximo mês">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+          <div class="cal-weekdays" aria-hidden="true">
+            <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span>
+            <span>Qui</span><span>Sex</span><span>Sáb</span>
+          </div>
+          <div class="cal-days" id="ca-cal-days" role="grid"></div>
+        </div>
+
+        <!-- Horários -->
+        <div class="time-slots-section" id="ca-time-slots-wrap" hidden>
+          <h3 class="time-slots-title">Escolha o horário</h3>
+          <div class="time-slots" id="ca-time-slots" role="group" aria-label="Horários disponíveis"></div>
+        </div>
+
+        <button
+          class="btn btn-primary btn-full"
+          style="margin-top:20px;width:100%"
+          id="ca-step2-next"
+          onclick="caGoToStep3()"
+          disabled
+        >
+          Revisar Agendamento <i data-lucide="arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- ── STEP 3: Confirmar ── -->
+      <div class="modal-step hidden" id="ca-bk-step-3">
+        <button class="back-btn" onclick="caShowBookingStep(2)" aria-label="Voltar">
+          <i data-lucide="arrow-left"></i> Voltar
+        </button>
+        <h2 class="modal-title">Confirmar Agendamento</h2>
+        <p class="modal-subtitle">Revise os detalhes antes de finalizar</p>
+
+        <!-- Resumo dos serviços, data e hora -->
+        <div class="booking-summary">
+          <div class="summary-item summary-item--services">
+            <i data-lucide="scissors"></i>
+            <div class="summary-services-wrap">
+              <span class="summary-label">Serviços</span>
+              <div id="ca-sum-services" class="summary-services-list">—</div>
+              <div id="ca-sum-total-line" class="summary-total-line" hidden>
+                <span class="summary-total-label">Total estimado</span>
+                <strong id="ca-sum-total" class="summary-total-value">—</strong>
+              </div>
+            </div>
+          </div>
+          <div class="summary-item">
+            <i data-lucide="calendar"></i>
+            <div>
+              <span class="summary-label">Data</span>
+              <strong class="summary-value" id="ca-sum-date">—</strong>
+            </div>
+          </div>
+          <div class="summary-item">
+            <i data-lucide="clock"></i>
+            <div>
+              <span class="summary-label">Horário</span>
+              <strong class="summary-value" id="ca-sum-time">—</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dados do cliente (pré-preenchidos, somente leitura) -->
+        <div class="ca-client-info-row">
+          <i data-lucide="user"></i>
+          <div class="ca-client-info-text">
+            <strong id="ca-sum-client-name">—</strong>
+            <span>Nome cadastrado</span>
+          </div>
+        </div>
+        <div class="ca-client-info-row">
+          <i data-lucide="phone"></i>
+          <div class="ca-client-info-text">
+            <strong id="ca-sum-client-phone">—</strong>
+            <span>WhatsApp cadastrado</span>
+          </div>
+        </div>
+
+        <!-- Aviso de crédito do plano -->
+        <div class="ca-plan-credit-note">
+          <i data-lucide="credit-card"></i>
+          <span>Este agendamento utilizará <strong>1 crédito do seu plano</strong>. O desconto é aplicado automaticamente quando o atendimento for concluído.</span>
+        </div>
+
+        <div class="confirm-note">
+          <i data-lucide="info"></i>
+          <p>Após confirmar, você receberá uma mensagem de confirmação pelo WhatsApp.</p>
+        </div>
+
+        <button
+          class="btn btn-primary btn-full"
+          style="margin-top:20px;width:100%"
+          id="ca-confirm-btn"
+          onclick="caFinalizeBooking()"
+        >
+          <i data-lucide="check"></i> Confirmar Agendamento
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════ MODAL DE SUCESSO ════════════════════════ -->
+  <div
+    id="ca-suc-backdrop"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ca-suc-title"
+    aria-hidden="true"
+  >
+    <div class="modal modal--small" id="ca-suc-modal">
+      <div class="success-icon" aria-hidden="true">
+        <i data-lucide="check-circle"></i>
+      </div>
+      <h2 class="modal-title" id="ca-suc-title">Agendamento Confirmado!</h2>
+      <p class="modal-subtitle">
+        Seu horário foi registrado com sucesso. Clique abaixo para enviar a confirmação pelo WhatsApp.
+      </p>
+
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
+        <a
+          id="ca-suc-wa-btn"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary btn-full"
+          style="display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;"
+        >
+          <i data-lucide="message-circle"></i> Abrir WhatsApp
+        </a>
+        <button class="btn btn-secondary btn-full" onclick="caCloseSuccessModal()">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+
+  <!-- Portal Script -->
+  <script src="assets/js/area-cliente.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+</body>
+
+</html>
