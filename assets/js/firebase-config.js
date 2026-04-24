@@ -3,8 +3,12 @@
    Conectado ao Orbit Tools (WordVirtua) como tenant
    ═══════════════════════════════════════════════════════════════ */
 
-/* UID do Tenant no Orbit Tools (Usando o da referência temporariamente) */
-const TENANT_UID = 'pjk70Jv4anW2ve4aWFdb8dqCpSv2';
+/*
+ * UID do Tenant no Orbit Tools.
+ * Para encontrar: abra o Orbit Tools → Admin → localize Pedro Marins na tabela → copie o UID da URL ou exibido no modal.
+ * Alternativa: Firebase Console → Authentication → Users → copie o User UID da conta de Pedro Marins.
+ */
+const TENANT_UID = 'pjk70Jv4anW2ve4aWFdb8dqCpSv2'; // ← VERIFIQUE se este UID bate com a conta no Orbit Tools
 
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyCMl29LbQqrqqPQR8EKa1g8Cm4rHUwLWJA',

@@ -247,6 +247,7 @@ function openModal(preselect) {
 }
 
 function closeModal() {
+  if (document.activeElement) document.activeElement.blur();
   backdrop.classList.remove('open');
   backdrop.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
@@ -591,7 +592,11 @@ async function finalizeOnWhatsApp() {
     });
     console.log('[Marins Barber] Agendamento salvo:', docRef.id);
   } catch (e) {
-    console.error('[Marins Barber] ERRO ao salvar agendamento:', e.code, e.message);
+    if (e.code === 'permission-denied') {
+      console.error('[Marins Barber] PERMISSÃO NEGADA ao salvar agendamento. Verifique as regras do Firestore — adicione a regra para permitir escrita em sched_bookings com source == "client".');
+    } else {
+      console.error('[Marins Barber] ERRO ao salvar agendamento:', e.code, e.message);
+    }
   }
 
   /* Fecha o booking modal e abre o modal de sucesso */
@@ -774,6 +779,7 @@ function openMultiSelectModal() {
 }
 
 function closeMultiSelectModal() {
+  if (document.activeElement) document.activeElement.blur();
   const bd = document.getElementById('multiselect-backdrop');
   bd.classList.remove('open');
   bd.setAttribute('aria-hidden', 'true');
