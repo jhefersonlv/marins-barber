@@ -404,11 +404,143 @@
   to   { transform: rotate(360deg); }
 }
 
-/* ── Modal pequeno (sucesso) ─────────────────────────────────── */
+/* ── Modal pequeno (sucesso / renovação) ─────────────────────── */
 .modal--small {
-  max-width: 380px;
-  text-align: center;
+  max-width: 400px;
   padding: 40px 32px;
+}
+
+/* ── Modal de renovação ─────────────────────────────────────── */
+.ca-ren-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.ca-ren-header i {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.ca-ren-price-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 16px 0;
+}
+
+.ca-ren-price-label { font-size: 0.82rem; color: var(--text-muted); }
+
+.ca-ren-price-value {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.ca-ren-instructions {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+
+/* Chave PIX */
+.ca-ren-pix-box {
+  background: #1a1a1a;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.ca-ren-pix-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.ca-ren-pix-label i { font-size: 0.9rem; }
+
+.ca-ren-pix-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ca-ren-pix-key-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color);
+  word-break: break-all;
+  flex: 1;
+}
+
+.ca-ren-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--primary-color);
+  color: #111;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.ca-ren-copy-btn:hover { background: var(--primary-hover); }
+
+/* QR Code */
+.ca-ren-qr-wrap { text-align: center; margin-bottom: 10px; }
+
+.ca-ren-qr-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.ca-ren-qr-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 10px;
+  border: 2px solid var(--border-color);
+  object-fit: contain;
+  background: #fff;
+  padding: 6px;
+}
+
+/* Aguardando confirmação */
+.ca-ren-waiting-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.1);
+  border: 2px solid var(--primary-color);
+  margin: 0 auto 20px;
+}
+
+.ca-ren-waiting-icon i {
+  font-size: 2rem;
+  color: var(--primary-color);
 }
 
 /* ── Checkbox nos serviços (reutiliza .service-option) ──────── */

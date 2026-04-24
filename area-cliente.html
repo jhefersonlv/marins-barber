@@ -265,6 +265,87 @@
     </div>
   </div>
 
+  <!-- ════════════════ MODAL DE RENOVAÇÃO (PIX) ═══════════════ -->
+  <div
+    id="ca-ren-backdrop"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ca-ren-title"
+    aria-hidden="true"
+  >
+    <div class="modal modal--small" id="ca-ren-modal">
+      <button class="modal-close" onclick="caCloseRenewalModal()" aria-label="Fechar">
+        <i data-lucide="x"></i>
+      </button>
+
+      <!-- ── Formulário de renovação ── -->
+      <div id="ca-ren-form">
+        <div class="ca-ren-header">
+          <i data-lucide="arrows-clockwise"></i>
+          <h2 class="modal-title" id="ca-ren-title">Renovar Plano</h2>
+        </div>
+        <p class="modal-subtitle">
+          Plano: <strong id="ca-ren-plan-name">—</strong>
+        </p>
+
+        <div class="ca-ren-price-box">
+          <span class="ca-ren-price-label">Valor da renovação</span>
+          <span class="ca-ren-price-value"><span id="ca-ren-plan-price">—</span></span>
+        </div>
+
+        <p class="ca-ren-instructions">
+          Faça o PIX para a chave abaixo e clique em <strong>"Confirmei o Pagamento"</strong>.
+          O Pedro receberá sua solicitação e ativará o plano assim que confirmar o recebimento.
+        </p>
+
+        <!-- Chave PIX -->
+        <div class="ca-ren-pix-box">
+          <div class="ca-ren-pix-label">
+            <i data-lucide="key"></i> Chave PIX
+          </div>
+          <div class="ca-ren-pix-row">
+            <span id="ca-ren-pix-key" class="ca-ren-pix-key-value">—</span>
+            <button id="ca-ren-copy-btn" class="ca-ren-copy-btn" onclick="caCopyPixKey()" title="Copiar chave">
+              <i data-lucide="copy"></i> Copiar
+            </button>
+          </div>
+        </div>
+
+        <!-- QR Code (opcional) -->
+        <div id="ca-ren-qr-wrap" class="ca-ren-qr-wrap" hidden>
+          <p class="ca-ren-qr-label">Ou escaneie o QR Code:</p>
+          <img id="ca-ren-qr-img" src="" alt="QR Code PIX" class="ca-ren-qr-img" />
+        </div>
+
+        <button
+          id="ca-ren-submit-btn"
+          class="ca-btn ca-btn--primary"
+          style="margin-top:20px;"
+          onclick="caSubmitRenewalRequest()"
+        >
+          <i data-lucide="check-circle"></i> Confirmei o Pagamento
+        </button>
+      </div>
+
+      <!-- ── Estado aguardando confirmação ── -->
+      <div id="ca-ren-waiting" hidden>
+        <div class="ca-ren-waiting-icon">
+          <i data-lucide="clock"></i>
+        </div>
+        <h2 class="modal-title" style="margin-bottom:10px;">Solicitação Enviada!</h2>
+        <p class="modal-subtitle" style="margin-bottom:20px;">
+          O Pedro recebeu sua solicitação de renovação e confirmará o pagamento em breve.
+          Assim que confirmado, seus créditos serão liberados automaticamente.
+        </p>
+        <button class="btn btn-secondary btn-full" onclick="caCloseRenewalModal()">
+          Fechar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ════════════════ MODAL DE SUCESSO ════════════════════════ -->
   <div
     id="ca-suc-backdrop"

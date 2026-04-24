@@ -46,6 +46,7 @@ let caScheduleCfg     = {
   defaultTimes: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00','18:00'],
   workDays: [1, 2, 3, 4, 5, 6],
 };
+let caPix = { key: '', qrUrl: '' }; /* Config PIX do tenant */
 
 /* ─── Sessão (sessionStorage) ───────────────────────────────── */
 function caSaveSession(client) {
@@ -321,17 +322,26 @@ function caRenderDashboard(client) {
       ${renewHtml}
     </div>`;
 
-  /* Estado do botão Agendar */
+  /* Estado do botão Agendar / Renovar */
   if (bookBtn) {
-    const canBook = !isExpired && !isFull;
-    bookBtn.disabled       = !canBook;
-    bookBtn.style.opacity  = canBook ? '' : '0.45';
-    bookBtn.style.cursor   = canBook ? '' : 'not-allowed';
-    bookBtn.title = isExpired
-      ? 'Seu plano está expirado. Renove para agendar.'
-      : isFull
-      ? 'Todos os créditos deste ciclo já foram utilizados.'
-      : '';
+    const canBook  = !isExpired && !isFull;
+    const needRenew = isExpired || isFull;
+
+    if (needRenew) {
+      bookBtn.disabled      = false;
+      bookBtn.style.opacity = '';
+      bookBtn.style.cursor  = '';
+      bookBtn.title         = '';
+      bookBtn.innerHTML     = `<i data-lucide="arrows-clockwise"></i> Renovar Plano`;
+      bookBtn.onclick       = () => caOpenRenewalModal();
+    } else {
+      bookBtn.disabled      = false;
+      bookBtn.style.opacity = '';
+      bookBtn.style.cursor  = '';
+      bookBtn.title         = '';
+      bookBtn.innerHTML     = `<i data-lucide="calendar-plus"></i> Agendar Horário`;
+      bookBtn.onclick       = () => caOpenBooking();
+    }
   }
 
   if (typeof lucide !== 'undefined') lucide.createIcons();
@@ -388,7 +398,11 @@ async function caLoadScheduleCfg() {
     const snap = await db.collection('users').doc(TENANT_UID)
       .collection('sched_config').doc('main').get();
     if (snap.exists) {
-      caScheduleCfg = { ...caScheduleCfg, ...snap.data() };
+      const d = snap.data();
+      caScheduleCfg = { ...caScheduleCfg, ...d };
+      /* Extrai config PIX se disponível */
+      if (d.pixKey)   caPix.key   = d.pixKey;
+      if (d.pixQrUrl) caPix.qrUrl = d.pixQrUrl;
     }
   } catch (e) { /* usa padrão */ }
 }
@@ -794,6 +808,121 @@ function caCloseSuccessModal() {
 }
 
 /* ══════════════════════════════════════════════════════════════
+   RENOVAÇÃO DE PLANO
+══════════════════════════════════════════════════════════════ */
+
+function caOpenRenewalModal() {
+  const sub = caClient && caClient.subscription;
+  if (!sub) return;
+
+  /* Preenche dados do plano */
+  const nameEl  = document.getElementById('ca-ren-plan-name');
+  const priceEl = document.getElementById('ca-ren-plan-price');
+  if (nameEl)  nameEl.textContent  = sub.planName || 'seu plano';
+  if (priceEl) priceEl.textContent = sub.price
+    ? `R$ ${Number(sub.price).toFixed(2).replace('.', ',')} `
+    : '';
+
+  /* Chave PIX */
+  const pixKeyEl = document.getElementById('ca-ren-pix-key');
+  if (pixKeyEl) pixKeyEl.textContent = caPix.key || '—';
+
+  /* QR Code (opcional — oculto se não configurado) */
+  const qrWrap = document.getElementById('ca-ren-qr-wrap');
+  const qrImg  = document.getElementById('ca-ren-qr-img');
+  if (qrWrap && qrImg) {
+    if (caPix.qrUrl) {
+      qrImg.src      = caPix.qrUrl;
+      qrWrap.hidden  = false;
+    } else {
+      qrWrap.hidden  = true;
+    }
+  }
+
+  /* Reseta para o estado inicial (formulário) */
+  _caRenSetView('form');
+
+  _caSetModalOpen('ca-ren-backdrop', true);
+  if (typeof lucide !== 'undefined') setTimeout(() => lucide.createIcons(), 50);
+}
+
+function caCloseRenewalModal() {
+  _caSetModalOpen('ca-ren-backdrop', false);
+}
+
+function _caRenSetView(view) {
+  /* 'form' → mostra formulário; 'waiting' → mostra aguardando confirmação */
+  const formEl    = document.getElementById('ca-ren-form');
+  const waitingEl = document.getElementById('ca-ren-waiting');
+  if (formEl)    formEl.hidden    = (view !== 'form');
+  if (waitingEl) waitingEl.hidden = (view !== 'waiting');
+}
+
+function caCopyPixKey() {
+  const key = caPix.key || '';
+  if (!key) return;
+  navigator.clipboard.writeText(key).then(() => {
+    const btn = document.getElementById('ca-ren-copy-btn');
+    if (!btn) return;
+    const orig = btn.innerHTML;
+    btn.innerHTML = `<i data-lucide="check"></i> Copiado!`;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }, 2000);
+  }).catch(() => {
+    /* Fallback para navegadores sem clipboard API */
+    const el = document.getElementById('ca-ren-pix-key');
+    if (el) {
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+    }
+  });
+}
+
+async function caSubmitRenewalRequest() {
+  const sub = caClient && caClient.subscription;
+  if (!sub || !caClient.id) return;
+
+  const btn = document.getElementById('ca-ren-submit-btn');
+  if (btn) {
+    btn.disabled  = true;
+    btn.innerHTML = `<i data-lucide="loader-2" style="width:16px;height:16px;" class="ca-spin"></i> Enviando...`;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+
+  try {
+    await db.collection('users').doc(TENANT_UID)
+      .collection('customers').doc(caClient.id)
+      .update({
+        renewalRequest: {
+          status:      'pending',
+          requestedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          planId:      sub.planId   || '',
+          planName:    sub.planName || '',
+          price:       sub.price    || 0,
+        },
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+    _caRenSetView('waiting');
+
+  } catch (e) {
+    console.error('[CA] caSubmitRenewalRequest erro:', e);
+    alert('Erro ao enviar solicitação. Verifique sua conexão e tente novamente.');
+  } finally {
+    if (btn) {
+      btn.disabled  = false;
+      btn.innerHTML = `<i data-lucide="check-circle"></i> Confirmei o Pagamento`;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
    EVENTOS
 ══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
@@ -815,16 +944,20 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Fechar modais pelo backdrop */
   const bkBackdrop  = document.getElementById('ca-bk-backdrop');
   const sucBackdrop = document.getElementById('ca-suc-backdrop');
+  const renBackdrop = document.getElementById('ca-ren-backdrop');
   if (bkBackdrop)  bkBackdrop.addEventListener('click',  e => { if (e.target === bkBackdrop)  caCloseBookingModal(); });
   if (sucBackdrop) sucBackdrop.addEventListener('click', e => { if (e.target === sucBackdrop) caCloseSuccessModal(); });
+  if (renBackdrop) renBackdrop.addEventListener('click', e => { if (e.target === renBackdrop) caCloseRenewalModal(); });
 
   /* Tecla Escape */
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     const bkOpen  = bkBackdrop  && bkBackdrop.classList.contains('open');
     const sucOpen = sucBackdrop && sucBackdrop.classList.contains('open');
-    if (bkOpen)      caCloseBookingModal();
+    const renOpen = renBackdrop && renBackdrop.classList.contains('open');
+    if (bkOpen)       caCloseBookingModal();
     else if (sucOpen) caCloseSuccessModal();
+    else if (renOpen) caCloseRenewalModal();
   });
 
   /* Inicializa o portal */
